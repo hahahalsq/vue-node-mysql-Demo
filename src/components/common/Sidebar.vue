@@ -162,6 +162,7 @@ export default {
     },
     created() {
         // 通过 Event Bus 进行组件间通信，来折叠侧边栏
+        // 在这通过角色不同登录不同的界面
         bus.$on('collapse', msg => {
             this.collapse = msg;
             bus.$emit('collapse-content', msg);
