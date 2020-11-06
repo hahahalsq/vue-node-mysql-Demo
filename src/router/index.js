@@ -78,6 +78,12 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "form" */ '../components/page/SubmitBaseForm.vue'),
                     meta: { title: '基本表单' }
                 },
+                {
+                    path: '/adminInfo',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/adminInfo.vue'),
+                    meta: { title: '用户列表' }
+                },
+
             ]
         },
         {

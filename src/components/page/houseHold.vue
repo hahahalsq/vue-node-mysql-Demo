@@ -8,7 +8,7 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-            <div class="handle-box">
+<!--             <div class="handle-box">
                 <el-button
                     type="primary"
                     icon="el-icon-delete"
@@ -17,7 +17,7 @@
                 >批量删除</el-button>
                 <el-input v-model="query.name" placeholder="用户名" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-            </div>
+            </div> -->
             <el-table
                 :data="tableData"
                 border
@@ -28,19 +28,27 @@
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                 <!-- <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column> -->
-                <el-table-column prop="username" label="用户名"></el-table-column>
+                <el-table-column prop="address" label="地址"></el-table-column>
 <!--                 <el-table-column label="账户余额">
                     <template slot-scope="scope">￥{{scope.row.money}}</template>
                 </el-table-column>
                 <el-table-column prop="address" label="地址"></el-table-column> -->
-                <el-table-column label="状态" align="center">
+<!--                 <el-table-column label="状态" align="center">
                     <template slot-scope="scope">
                         <el-tag v-show="scope.row.state == 1" type='success'
                         >正常</el-tag>
                         <el-tag v-show="scope.row.state != 1" type='danger'
                         >异常</el-tag>
                     </template>
+                </el-table-column> -->
+
+                <el-table-column label="描述">
+                    <template slot-scope="scope">
+                        {{scope.row.describe}}
+                    </template>
                 </el-table-column>
+                <el-table-column prop="address" label="价格"></el-table-column>
+
                 <el-table-column label="级别" align="center">
                     <template slot-scope="scope">
                         {{scope.row.level}}

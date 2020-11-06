@@ -30,7 +30,7 @@ export default {
     data() {
         return {
             name: localStorage.getItem('ms_username'),
-            status:localStorage.getItem('ms_status'),
+            level:localStorage.getItem('ms_level'),
         };
     },
     components: {
@@ -39,9 +39,9 @@ export default {
     computed: {
         role() {
             // return this.name === 'admin' ? '超级管理员' : '普通用户';
-            if(parseInt(this.status) === 1){
+            if(parseInt(this.level) === 1){
                 return '超级管理员'
-            }else if(parseInt(this.status) === 2){
+            }else if(parseInt(this.level) === 2){
                 return '医生'
             }else{
                 return '普通用户'

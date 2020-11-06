@@ -73,7 +73,7 @@ export default {
                         console.log(response.data)
                         if(response.data.length){
                             localStorage.setItem('ms_username', name);
-                            localStorage.setItem('ms_status',response.data[0].status);
+                            localStorage.setItem('ms_level',response.data[0].level);
                             that.$router.push({
                               path:'/',
                             })

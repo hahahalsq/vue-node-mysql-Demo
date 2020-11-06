@@ -58,6 +58,35 @@ app.post('/login',function(req,res){
     })
 });
 
+// 处理请求用户账号信息列表请求
+app.post('/getUserList',function(req,res){
+    name=req.body.username
+    state=req.body.state
+    pool.getConnection((err,connection) => {
+        var sql = 'UPDATE user SET state = ? WHERE username = ?'
+        connection.query(sql,[name,state],(err,result) =>{
+            console.log(result)
+            res.status(200).send(
+                result
+              ) ;
+            connection.release();
+        })
+    })
+});
+// 管理员操作账户状态
+app.post('/adminChangeState',function(req,res){
+    pool.getConnection((err,connection) => {
+        var sql = 'SELECT * FROM user'
+        connection.query(sql,(err,result) =>{
+            console.log(result)
+            res.status(200).send(
+                result
+              ) ;
+            connection.release();
+        })
+    })
+});
+
 // 普通用户提交信息接口
 app.post('/submitform',function(req,res){
     //获取登录名称和密码

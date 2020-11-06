@@ -56,7 +56,7 @@ export default {
         return {
             collapse: false,
             name: localStorage.getItem('ms_username'),
-            status: localStorage.getItem('ms_status'),
+            level: localStorage.getItem('ms_level'),
             items: [
                 {
                     icon: 'el-icon-lx-home',
@@ -169,8 +169,8 @@ export default {
         });
         console.log(localStorage)
         this.name = localStorage.getItem('ms_username');
-        this.status = localStorage.getItem('ms_status');
-        if( parseInt(this.status) == 1){                 // 管理员
+        this.level = localStorage.getItem('ms_level');
+        if( parseInt(this.level) == 1){                 // 管理员
             this.items = [
                 {
                     icon: 'el-icon-lx-home',
@@ -179,11 +179,11 @@ export default {
                 },
                 {
                     icon: 'el-icon-lx-cascades',
-                    index: 'table',
-                    title: '基础表格'
+                    index: 'adminInfo',
+                    title: '用户列表'
                 },
             ]
-        }else if( parseInt(this.status) == 2){         // 医生
+        }else if( parseInt(this.level) == 2){         // 房东
             this.items = [
                 {
                     icon: 'el-icon-lx-home',
@@ -192,11 +192,16 @@ export default {
                 },
                 {
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: 'tab选项卡'
+                    index: 'houseHold',
+                    title: '出租房屋'
                 },
+                {
+                    icon: 'el-icon-lx-copy',
+                    index: 'houseOperate',
+                    title: '房屋操作'
+                },                
             ]         
-        }else if( parseInt(this.status) == 3){         // 普通用户
+        }else if( parseInt(this.level) == 3){         // 普通用户
             this.items = [
                 {
                     icon: 'el-icon-lx-home',
