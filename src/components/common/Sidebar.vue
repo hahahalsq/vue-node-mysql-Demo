@@ -193,12 +193,12 @@ export default {
                 {
                     icon: 'el-icon-lx-copy',
                     index: 'houseHold',
-                    title: '出租房屋'
+                    title: '持有列表'
                 },
                 {
                     icon: 'el-icon-lx-copy',
-                    index: 'houseOperate',
-                    title: '房屋操作'
+                    index: 'houseEdit',
+                    title: '房屋编辑'
                 },                
             ]         
         }else if( parseInt(this.level) == 3){         // 普通用户
@@ -210,8 +210,8 @@ export default {
                 },
                 {
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: 'tab选项卡'
+                    index: 'houseList',
+                    title: '房屋列表'
                 },
                 {
                     icon: 'el-icon-lx-calendar',

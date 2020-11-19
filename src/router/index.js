@@ -83,6 +83,16 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "form" */ '../components/page/adminInfo.vue'),
                     meta: { title: '用户列表' }
                 },
+                {
+                    path: '/houseHold',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/houseHold.vue'),
+                    meta: { title: '持有列表' }
+                },
+                {
+                    path: '/houseEdit',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/houseEdit.vue'),
+                    meta: { title: '房屋编辑' }
+                },
 
             ]
         },
