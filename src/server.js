@@ -5,8 +5,8 @@ const mysql             = require('mysql')
 
 const mysqlConfig = {
     host:'localhost',
-    user:'root',
-    password:'123456',
+    user:'root',               // 数据库用户名
+    password:'root',         // 数据库密码
     database:'test1',
     port:'3306'
 }
@@ -21,7 +21,7 @@ const pool=mysql.createPool({
 
 //增加头部信息解决跨域问题
 app.all('*', function (req, res, next){
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080");//允许源访问，本利前端访问路径为“http://localhost:8080”
+    res.header("Access-Control-Allow-Origin", "http://localhost:8081");//允许源访问，本利前端访问路径为“http://localhost:8080”
     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
     res.header("Access-Control-Allow-Credentials", true);
