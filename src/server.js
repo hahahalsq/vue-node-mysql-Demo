@@ -21,7 +21,7 @@ const pool=mysql.createPool({
 
 //增加头部信息解决跨域问题
 app.all('*', function (req, res, next){
-    res.header("Access-Control-Allow-Origin", "http://localhost:8081");//允许源访问，本利前端访问路径为“http://localhost:8080”
+    res.header("Access-Control-Allow-Origin", "http://localhost:8080");//允许源访问，本利前端访问路径为“http://localhost:8080”
     res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
     res.header("Access-Control-Allow-Credentials", true);
@@ -58,12 +58,36 @@ app.post('/login',function(req,res){
     })
 });
 
+// 用户注册信息接口
+app.post('/register',function(req,res){
+    //获取登录名称和密码
+    username = req.body.name;
+    password = req.body.pwd;
+    level = req.body.level;
+    state = 1;
+
+    //向前台反馈信息
+    pool.getConnection((err,connection) => {
+        var sql = 'INSERT INTO user (username,password,state,level) VALUES (?,?,?,?)'
+        connection.query(sql,[username,password,state,level],(err,result) =>{
+            console.log(result)
+            res.status(200).send(
+                result
+              ) ;
+            connection.release();
+        })
+    })
+});
+
+
+
 // 处理请求用户账号信息列表请求
 app.post('/getUserList',function(req,res){
     name=req.body.username
     state=req.body.state
     pool.getConnection((err,connection) => {
-        var sql = 'UPDATE user SET state = ? WHERE username = ?'
+        var sql = 'SELECT * FROM user'
+        // var sql = 'UPDATE user SET state = ? WHERE username = ?'
         connection.query(sql,[name,state],(err,result) =>{
             console.log(result)
             res.status(200).send(
@@ -75,9 +99,12 @@ app.post('/getUserList',function(req,res){
 });
 // 管理员操作账户状态
 app.post('/adminChangeState',function(req,res){
+    name = req.body.username
+    state = req.body.state
+    console.log(name,state)
     pool.getConnection((err,connection) => {
-        var sql = 'SELECT * FROM user'
-        connection.query(sql,(err,result) =>{
+        var sql = 'UPDATE user SET state = ? WHERE username = ?'
+        connection.query(sql,[state,name],(err,result) =>{
             console.log(result)
             res.status(200).send(
                 result

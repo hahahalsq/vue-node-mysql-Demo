@@ -21,6 +21,10 @@
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm()">登录</el-button>
                 </div>
+                <div class="login-btn">
+                    <el-button type="primary" @click="registeForm()">注册</el-button>
+                </div>
+
                 <p class="login-tips">Tips : 用户名和密码随便填。</p>
             </el-form>
         </div>
@@ -43,19 +47,15 @@ export default {
         };
     },
     methods: {
-        submitForm() {
-            // this.$refs.login.validate(valid => {
-            //     if (valid) {
-            //         // this.$message.success('登录成功');
-            //         // localStorage.setItem('ms_username', this.param.username);
-            //         // this.$router.push('/');
-            //     } else {
-            //         this.$message.error('请输入账号和密码');
-            //         console.log('error submit!!');
-            //         return false;
-            //     }
-            // }
+        registeForm(){
+            var tokenStr = window.sessionStorage.getItem('token') 
+            console.log(tokenStr)
 
+            this.$router.push({
+              path:'/register',
+            })
+        },
+        submitForm() {
             const that = this
             var name = this.param.username
             var pwd = this.param.password
@@ -69,8 +69,8 @@ export default {
                     })
                     .then(function(response) {
                         //成功时服务器返回 response 数据
-                        console.log('~~~~~~~~~~~')
-                        console.log(response.data)
+                        // console.log('~~~~~~~~~~~')
+                        // console.log(response.data)
                         if(response.data.length){
                             localStorage.setItem('ms_username', name);
                             localStorage.setItem('ms_level',response.data[0].level);

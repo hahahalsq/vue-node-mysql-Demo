@@ -27,12 +27,8 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
-                <!-- <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column> -->
-                <el-table-column prop="username" label="用户名"></el-table-column>
-<!--                 <el-table-column label="账户余额">
-                    <template slot-scope="scope">￥{{scope.row.money}}</template>
-                </el-table-column>
-                <el-table-column prop="address" label="地址"></el-table-column> -->
+                <el-table-column prop="username" label="用户名" align="center"></el-table-column>
+
                 <el-table-column label="状态" align="center">
                     <template slot-scope="scope">
                         <el-tag v-show="scope.row.state == 1" type='success'
@@ -43,7 +39,12 @@
                 </el-table-column>
                 <el-table-column label="级别" align="center">
                     <template slot-scope="scope">
-                        {{scope.row.level}}
+                        <el-tag v-show="scope.row.level == 1"
+                        >管理员</el-tag>
+                        <el-tag v-show="scope.row.level == 2" type='info'
+                        >房东</el-tag>
+                        <el-tag v-show="scope.row.level == 3" type='warning'
+                        >租客</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="180" align="center">
@@ -51,47 +52,20 @@
                         <el-button
                             type="text"
                             icon="el-icon-edit"
-                            @click="handleEdit(scope.$index, scope.row)"
-                        >操作</el-button>
-<!--                         <el-button
-                            type="text"
-                            icon="el-icon-delete"
-                            class="red"
-                            @click="handleDelete(scope.$index, scope.row)"
-                        >删除</el-button> -->
-                    </template>
-                </el-table-column>
-                <!-- <el-table-column prop="date" label="注册时间"></el-table-column> -->
-<!--                 <el-table-column label="操作" width="180" align="center">
-                    <template slot-scope="scope">
+                            @click="handleEdit(scope.$index, scope.row)" v-show="scope.row.state != 1 && scope.row.level != 1" 
+                        >上线</el-button>
                         <el-button
                             type="text"
                             icon="el-icon-edit"
-                            @click="handleEdit(scope.$index, scope.row)"
-                        >编辑</el-button>
-                        <el-button
-                            type="text"
-                            icon="el-icon-delete"
-                            class="red"
-                            @click="handleDelete(scope.$index, scope.row)"
-                        >删除</el-button>
+                            @click="handleEdit(scope.$index, scope.row)" v-show="scope.row.state == 1 && scope.row.level != 1"
+                        >下线</el-button>
                     </template>
-                </el-table-column> -->
+                </el-table-column>
             </el-table>
-<!--             <div class="pagination">
-                <el-pagination
-                    background
-                    layout="total, prev, pager, next"
-                    :current-page="query.pageIndex"
-                    :page-size="query.pageSize"
-                    :total="pageTotal"
-                    @current-change="handlePageChange"
-                ></el-pagination>
-            </div> -->
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
+<!--         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="70px">
                 <el-form-item label="用户名">
                     <el-input v-model="form.name"></el-input>
@@ -104,7 +78,7 @@
                 <el-button @click="editVisible = false">取 消</el-button>
                 <el-button type="primary" @click="saveEdit">确 定</el-button>
             </span>
-        </el-dialog>
+        </el-dialog> -->
     </div>
 </template>
 
@@ -141,8 +115,8 @@ export default {
             axios.post('http://127.0.0.1:3000/getUserList', {})
                 .then(function(response) {
                     //成功时服务器返回 response 数据
-                    console.log('~~~~~~~~~~~')
-                    console.log(response.data)
+                    // console.log('~~~~~~~~~~~')
+                    // console.log(response.data)
                     if(response.data.length){
                         that.tableData = response.data
                     }else{
@@ -193,13 +167,13 @@ export default {
             axios.post('http://127.0.0.1:3000/adminChangeState', {
                 username:user,
                 state:stateChange
-            })
-                .then(function(response) {
+            }).then(function(response) {
                     //成功时服务器返回 response 数据
-                    console.log('~~~~~~~~~~~')
-                    console.log(response.data)
-                    if(response.data.length){
-                        that.tableData = response.data
+                    // console.log('~~~~~~~~~~~')
+                    // console.log(response)
+                    if(response.status == 200)
+                    {
+                        that.getData();
                     }else{
                         that.$message.error('没有数据')
                         return false
