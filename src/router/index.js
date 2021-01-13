@@ -93,6 +93,11 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "form" */ '../components/page/houseEdit.vue'),
                     meta: { title: '房屋编辑' }
                 },
+                {
+                    path: '/marketList',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/houseEdit.vue'),
+                    meta: { title: '房屋市场' }
+                },
 
             ]
         },

@@ -67,6 +67,43 @@
                         <el-button type="primary" @click="onSubmit">表单提交</el-button>
                         <el-button>取消</el-button>
                     </el-form-item>
+
+
+          <el-form-item label="社区地址" prop="sheng">
+            <div style="display:flex;">
+              <el-select class="selectWidth2" v-model="form.dataA" @change="choseProvince" placeholder="省级地区">
+               <el-option
+                v-for="item in JsonDataA"
+                :key="item.ProvinceId"
+                :label="item.ProvinceName"
+                :value="item.ProvinceId">
+               </el-option>
+              </el-select>
+              <el-select class="selectWidth2" v-model="form.dataB"
+               @change="choseCity"
+               placeholder="市级地区">
+               <el-option
+                v-for="item in shi1"
+                :key="item.CityId"
+                :label="item.CityName"
+                :value="item.CityId">
+               </el-option>
+              </el-select>
+              <el-select class="selectWidth2" v-model="form.dataC"
+               @change="choseBlock"
+               placeholder="区级地区">
+               <el-option
+                v-for="item in qu1"
+                :key="item.AREAID"
+                :label="item.AreaName"
+                :value="item.AREAID">
+               </el-option>
+              </el-select>
+            </div>
+          </el-form-item>
+
+
+
                 </el-form>
             </div>
         </div>
@@ -74,6 +111,9 @@
 </template>
 
 <script>
+import JsonDataA from '../../assets/data/province.json';
+import JsonDataB from '../../assets/data/city.json'
+import JsonDataC from '../../assets/data/county.json';
 export default {
     name: 'baseform',
     data() {
@@ -139,14 +179,71 @@ export default {
                 type: ['步步高'],
                 resource: '小天才',
                 desc: '',
-                options: []
-            }
+                options: [],
+                dataA :'',
+                dataB : '',
+                dataC : '',
+            },
         };
     },
     methods: {
         onSubmit() {
             this.$message.success('提交成功！');
-        }
+        },
+
+        // 获取省份信息
+        getProvinceList(){
+          Community.ProvinceListQry().then(data=>{
+            if(data.RespCode == '000000'){
+              this.province = data.ProvinceList
+            }
+          });
+        },
+
+        // 选省
+        choseProvince:function(e) {
+          console.log(e)
+          // 获取市列表
+          let param1 = {
+            ProvinceId:e.toString()
+          }
+          Community.CityListQry(param1).then(data=>{
+            if(data.RespCode == '000000'){
+              this.shi1 = data.CityList
+              this.shi = this.shi1[0].CityId
+              // 获取区列表
+              let param2 = {
+                CityId:this.shi.toString()
+              }
+              Community.AreaListQry(param2).then(data=>{
+                if(data.RespCode == '000000'){
+                  this.qu1 = data.AreaList
+                  this.qu = this.qu1[0].AREAID
+                }
+              });
+            }
+          });
+        },
+        // 选市
+        choseCity:function(e) {
+          //  获取区列表
+          let param2 = {
+            CityId:e.toString()
+          }
+          Community.AreaListQry(param2).then(data=>{
+            if(data.RespCode == '000000'){
+              this.qu1 = data.AreaList
+              this.qu = this.qu1[0].AREAID
+            }
+          });
+        },
+        // 选区
+        choseBlock:function(e) {
+
+        },
+
+
+
     }
 };
 </script>
