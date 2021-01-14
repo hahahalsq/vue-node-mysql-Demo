@@ -1,4 +1,4 @@
-{
+module.exports = {
     "110000000000": [
         {
             "province": "北京市", 

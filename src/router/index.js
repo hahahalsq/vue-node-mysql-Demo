@@ -112,6 +112,13 @@ export default new Router({
             meta: { title: '注册' }
         },
         {
+            path: '/address',
+            component: () => import(/* webpackChunkName: "login" */ '../components/page/BaseForm.vue'),
+            meta: { title: '三级联动' }
+        },
+
+
+        {
             path: '*',
             redirect: '/404'
         },

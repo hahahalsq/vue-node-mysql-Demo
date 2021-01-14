@@ -27,6 +27,8 @@ router.beforeEach((to, from, next) => {
     if (!role && to.path !== '/login') {
         if(to.path == '/register'){
             next()
+        }else if(to.path == '/address'){
+            next()
         }else{
             next('/login');
         }

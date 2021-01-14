@@ -1,17 +1,17 @@
 <template>
     <div>
-        <div class="crumbs">
+<!--         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
                     <i class="el-icon-lx-calendar"></i> 表单
                 </el-breadcrumb-item>
                 <el-breadcrumb-item>基本表单</el-breadcrumb-item>
             </el-breadcrumb>
-        </div>
+        </div> -->
         <div class="container">
             <div class="form-box">
                 <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="表单名称">
+<!--                     <el-form-item label="表单名称">
                         <el-input v-model="form.name"></el-input>
                     </el-form-item>
                     <el-form-item label="选择器">
@@ -66,37 +66,37 @@
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">表单提交</el-button>
                         <el-button>取消</el-button>
-                    </el-form-item>
+                    </el-form-item> -->
 
 
-          <el-form-item label="社区地址" prop="sheng">
+          <el-form-item label="地址" prop="sheng">
             <div style="display:flex;">
               <el-select class="selectWidth2" v-model="form.dataA" @change="choseProvince" placeholder="省级地区">
                <el-option
                 v-for="item in JsonDataA"
-                :key="item.ProvinceId"
-                :label="item.ProvinceName"
-                :value="item.ProvinceId">
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
                </el-option>
               </el-select>
               <el-select class="selectWidth2" v-model="form.dataB"
                @change="choseCity"
                placeholder="市级地区">
                <el-option
-                v-for="item in shi1"
-                :key="item.CityId"
-                :label="item.CityName"
-                :value="item.CityId">
+                v-for="item in shis"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
                </el-option>
               </el-select>
               <el-select class="selectWidth2" v-model="form.dataC"
                @change="choseBlock"
                placeholder="区级地区">
                <el-option
-                v-for="item in qu1"
-                :key="item.AREAID"
-                :label="item.AreaName"
-                :value="item.AREAID">
+                v-for="item in qus"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
                </el-option>
               </el-select>
             </div>
@@ -111,65 +111,71 @@
 </template>
 
 <script>
-import JsonDataA from '../../assets/data/province.json';
-import JsonDataB from '../../assets/data/city.json'
-import JsonDataC from '../../assets/data/county.json';
+import provinceData from '@/assets/data/province.js';
+import cityData from '../../assets/data/city.js'
+import countyData from '../../assets/data/county.js';
+
 export default {
     name: 'baseform',
     data() {
         return {
-            options: [
-                {
-                    value: 'guangdong',
-                    label: '广东省',
-                    children: [
-                        {
-                            value: 'guangzhou',
-                            label: '广州市',
-                            children: [
-                                {
-                                    value: 'tianhe',
-                                    label: '天河区'
-                                },
-                                {
-                                    value: 'haizhu',
-                                    label: '海珠区'
-                                }
-                            ]
-                        },
-                        {
-                            value: 'dongguan',
-                            label: '东莞市',
-                            children: [
-                                {
-                                    value: 'changan',
-                                    label: '长安镇'
-                                },
-                                {
-                                    value: 'humen',
-                                    label: '虎门镇'
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    value: 'hunan',
-                    label: '湖南省',
-                    children: [
-                        {
-                            value: 'changsha',
-                            label: '长沙市',
-                            children: [
-                                {
-                                    value: 'yuelu',
-                                    label: '岳麓区'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
+            // options: [
+            //     {
+            //         value: 'guangdong',
+            //         label: '广东省',
+            //         children: [
+            //             {
+            //                 value: 'guangzhou',
+            //                 label: '广州市',
+            //                 children: [
+            //                     {
+            //                         value: 'tianhe',
+            //                         label: '天河区'
+            //                     },
+            //                     {
+            //                         value: 'haizhu',
+            //                         label: '海珠区'
+            //                     }
+            //                 ]
+            //             },
+            //             {
+            //                 value: 'dongguan',
+            //                 label: '东莞市',
+            //                 children: [
+            //                     {
+            //                         value: 'changan',
+            //                         label: '长安镇'
+            //                     },
+            //                     {
+            //                         value: 'humen',
+            //                         label: '虎门镇'
+            //                     }
+            //                 ]
+            //             }
+            //         ]
+            //     },
+            //     {
+            //         value: 'hunan',
+            //         label: '湖南省',
+            //         children: [
+            //             {
+            //                 value: 'changsha',
+            //                 label: '长沙市',
+            //                 children: [
+            //                     {
+            //                         value: 'yuelu',
+            //                         label: '岳麓区'
+            //                     }
+            //                 ]
+            //             }
+            //         ]
+            //     }
+            // ],
+            JsonDataA:'',
+            JsonDataB:'',
+            JsonDataC:'',
+            shis:[],
+            qus:[],
             form: {
                 name: '',
                 region: '',
@@ -186,56 +192,27 @@ export default {
             },
         };
     },
+    created(){
+        this.JsonDataA = provinceData
+        this.JsonDataB = cityData
+        this.JsonDataC = countyData
+    },
     methods: {
         onSubmit() {
             this.$message.success('提交成功！');
         },
-
-        // 获取省份信息
-        getProvinceList(){
-          Community.ProvinceListQry().then(data=>{
-            if(data.RespCode == '000000'){
-              this.province = data.ProvinceList
-            }
-          });
-        },
-
         // 选省
         choseProvince:function(e) {
-          console.log(e)
-          // 获取市列表
-          let param1 = {
-            ProvinceId:e.toString()
-          }
-          Community.CityListQry(param1).then(data=>{
-            if(data.RespCode == '000000'){
-              this.shi1 = data.CityList
-              this.shi = this.shi1[0].CityId
-              // 获取区列表
-              let param2 = {
-                CityId:this.shi.toString()
-              }
-              Community.AreaListQry(param2).then(data=>{
-                if(data.RespCode == '000000'){
-                  this.qu1 = data.AreaList
-                  this.qu = this.qu1[0].AREAID
-                }
-              });
-            }
-          });
+          this.shis = this.JsonDataB[e]
+          this.form.dataB = this.shis[0].id
+          var cityId = this.form.dataB
+          this.qus = this.JsonDataC[cityId]
+          this.form.dataC = this.qus[0].id
         },
         // 选市
         choseCity:function(e) {
-          //  获取区列表
-          let param2 = {
-            CityId:e.toString()
-          }
-          Community.AreaListQry(param2).then(data=>{
-            if(data.RespCode == '000000'){
-              this.qu1 = data.AreaList
-              this.qu = this.qu1[0].AREAID
-            }
-          });
+          this.qus = this.JsonDataC[e]
+          this.form.dataC = this.qus[0].id
         },
         // 选区
         choseBlock:function(e) {
